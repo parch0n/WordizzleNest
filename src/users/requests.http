@@ -1,17 +1,22 @@
 ### Create user
-POST http://localhost:3000/users/signup
+POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-    "email": "asd5@asd.com",
+    "email": "asd1@asd.com",
     "password": "asdf"
 }
 
 ### Signin user
-POST http://localhost:3000/users/signin
+POST http://localhost:3000/auth/signin
 content-type: application/json
 
 {
-    "email": "asd@asd.com",
-    "password": "asdf2"
+    "email": "asd3@asd.com",
+    "password": "asdf"
 }
+
+### Signout user
+POST http://localhost:3000/auth/signout
+
+GET http://localhost:3000/auth/whoami
