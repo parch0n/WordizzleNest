@@ -12,11 +12,12 @@ POST http://localhost:3000/auth/signin
 content-type: application/json
 
 {
-    "email": "asd3@asd.com",
+    "email": "asd1@asd.com",
     "password": "asdf"
 }
 
 ### Signout user
 POST http://localhost:3000/auth/signout
 
+### 
 GET http://localhost:3000/auth/whoami
