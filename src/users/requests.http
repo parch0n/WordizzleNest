@@ -1,0 +1,17 @@
+### Create user
+POST http://localhost:3000/users/signup
+content-type: application/json
+
+{
+    "email": "asd5@asd.com",
+    "password": "asdf"
+}
+
+### Signin user
+POST http://localhost:3000/users/signin
+content-type: application/json
+
+{
+    "email": "asd@asd.com",
+    "password": "asdf2"
+}
