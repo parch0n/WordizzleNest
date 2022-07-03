@@ -7,6 +7,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './users/users.entity';
 import { ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
+import { StatsModule } from './stats/stats.module';
+import { Words } from './games/words.entity';
+import { Games } from './games/games.entity';
+import { GamesService } from './games/games.service';
+import { WordsService } from './games/words.service';
 const cookieSession = require('cookie-session');
 
 @Module({
@@ -17,10 +22,12 @@ const cookieSession = require('cookie-session');
             port: 27017,
             database: 'wordle',
             useUnifiedTopology: true,
-            entities: [Users]
+            entities: [Users, Words, Games]
         }),
         UsersModule,
-        GamesModule
+        GamesModule,
+        StatsModule,
+        TypeOrmModule.forFeature([Words, Games])
     ],
     controllers: [AppController],
     providers: [
@@ -30,7 +37,9 @@ const cookieSession = require('cookie-session');
             useValue: new ValidationPipe({
                 whitelist: true
             })
-        }
+        },
+        GamesService,
+        WordsService
     ]
 })
 export class AppModule {

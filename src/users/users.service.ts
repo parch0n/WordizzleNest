@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository, Repository } from 'typeorm';
 import { Users } from './users.entity';
 
 @Injectable()
@@ -13,6 +13,6 @@ export class UsersService {
     }
 
     find(email: string) {
-        return this.repo.findOne({ email });
+        return this.repo.findOne({ where: { email } });
     }
 }
