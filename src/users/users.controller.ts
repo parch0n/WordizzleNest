@@ -12,11 +12,12 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { Users } from './users.entity';
 import { AuthGuard } from '../guards/auth.guard';
+import { User } from './user.schema';
+import { UserInterceptor } from './interceptors/user.interceptor';
 
 @Controller('auth')
-@UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(UserInterceptor)
 export class UsersController {
     constructor(private usersService: UsersService, private authService: AuthService) {}
 
@@ -39,9 +40,14 @@ export class UsersController {
         session.email = null;
     }
 
+    @Get('/test')
+    async test() {
+        return await this.usersService.find('asd1@asd.com');
+    }
+
     @Get('/whoami')
     @UseGuards(AuthGuard)
-    whoAmI(@CurrentUser() user: Users) {
+    whoAmI(@CurrentUser() user: User) {
         return user;
     }
 }

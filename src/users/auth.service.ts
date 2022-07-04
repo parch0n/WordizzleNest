@@ -13,7 +13,6 @@ export class AuthService {
         }
 
         const hash = await bcrypt.hash(password, 10);
-
         const newUser = await this.usersService.create(email, hash);
         return newUser;
     }

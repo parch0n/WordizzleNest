@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { GamesController } from './games.controller';
-import { Words } from './words.entity';
 import { WordsService } from './words.service';
 import { GamesService } from './games.service';
-import { Games } from './games.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Game, GameSchema } from './game.schema';
+import { User, UserSchema } from 'src/users/user.schema';
+import { Word, WordSchema } from './word.schema';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Words, Games])],
+    imports: [
+        MongooseModule.forFeature([
+            { name: Game.name, schema: GameSchema },
+            //{ name: User.name, schema: UserSchema }
+            { name: Word.name, schema: WordSchema }
+        ])
+    ],
+    //imports: [TypeOrmModule.forFeature([Words, Games])],
     controllers: [GamesController],
     providers: [WordsService, GamesService]
 })

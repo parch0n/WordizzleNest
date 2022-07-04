@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+/*import { DataSource } from 'typeorm';
 import { Words } from './src/games/words.entity';
 import * as fs from 'fs';
 
@@ -90,3 +90,4 @@ dataSource
 //         process.exit();
 //     })
 //     .catch((err) => console.log(err));
+*/

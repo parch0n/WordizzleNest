@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Session } from '@nestjs/common';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { WordDto } from './dtos/word.dto';
 import { GamesService } from './games.service';
 import { WordsService } from './words.service';
@@ -12,5 +13,10 @@ export class GamesController {
         //return this.wordsService.find(5, 'bg');
         //return this, this.wordsService.compareWords(body.word, 'minko');
         return this.gamesService.createGame(5, 6, 'eng');
+    }
+
+    @Get('/test')
+    test(@CurrentUser() user) {
+        return this.gamesService.test(user);
     }
 }

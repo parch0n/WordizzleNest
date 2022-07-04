@@ -4,3 +4,8 @@ content-type: application/json
 {
     "word": "minko"
 }
+
+###
+
+GET http://localhost:3000/test
+

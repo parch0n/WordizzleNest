@@ -1,15 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Games } from './games.entity';
-import { Words } from './words.entity';
+import { Injectable, NotFoundException, Session } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Game, GameDocument } from './game.schema';
 import { WordsService } from './words.service';
+import { Model } from 'mongoose';
+import { Word, WordDocument } from './word.schema';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 
 @Injectable()
 export class GamesService {
     constructor(
         private wordsService: WordsService,
-        @InjectRepository(Games) private repo: Repository<Games>
+        @InjectModel(Game.name) private gameModel: Model<GameDocument>,
+        @InjectModel(Word.name) private wordModel: Model<WordDocument>
     ) {}
 
     async createGame(length: number, guesses: number, lang: string) {
@@ -19,13 +21,19 @@ export class GamesService {
                 "Couldn't find a word with the specified parameters"
             );
         }
-        console.log(word);
-        const word2 = new Words();
-        word2.lang = 'asd';
-        word2.word = 'minko';
+        // console.log(word);
+        const game = new this.gameModel({ word, length, guesses, lang });
+        return game.save();
+    }
 
-        //const game = this.repo.create({ word2, length, guesses, lang });
-        return this.repo.save({ word, length, guesses, lang });
-        //return await
+    async test(@CurrentUser() user) {
+        //  console.log(user);
+
+        const game = await this.gameModel.findById('62c242e65eb74f294011c165');
+        game.user.push(user);
+        return game.update(game);
+        //const user =
+        //  return this.gameModel.find().populate('word', '-_id -lang', this.wordModel);
+        //return this.gameModel.find();
     }
 }

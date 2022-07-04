@@ -1,4 +1,4 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+/*import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
 
 @Entity()
 export class Words {
@@ -11,3 +11,4 @@ export class Words {
     @Column()
     lang: string;
 }
+*/

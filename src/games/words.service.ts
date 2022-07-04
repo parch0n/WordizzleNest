@@ -1,29 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { MongoRepository, Repository } from 'typeorm';
-import { workerData } from 'worker_threads';
-import { Words } from './words.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Word, WordDocument } from './word.schema';
 
 @Injectable()
 export class WordsService {
-    constructor(@InjectRepository(Words) private repo: MongoRepository<Words>) {}
-    async find(length: number, lang: string) {
-        const word: any = await this.repo
-            .aggregate([
-                {
-                    $match: {
-                        $expr: {
-                            $eq: [{ $strLenCP: '$word' }, length]
-                        },
-                        lang
-                    }
-                },
-                {
-                    $sample: { size: 1 }
+    constructor(@InjectModel(Word.name) private wordModel: Model<WordDocument>) {}
+
+    async find(length: number, lang: string): Promise<Word> {
+        const word = await this.wordModel.aggregate([
+            {
+                $match: {
+                    $expr: {
+                        $eq: [{ $strLenCP: '$word' }, length]
+                    },
+                    lang
                 }
-            ])
-            .toArray();
-        return word[0].word;
+            },
+            {
+                $sample: { size: 1 }
+            }
+        ]);
+        return word[0];
     }
 
     compareWords(guess: string, target: string) {
