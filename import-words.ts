@@ -1,8 +1,7 @@
-/*import { DataSource } from 'typeorm';
-import { Words } from './src/games/words.entity';
 import * as fs from 'fs';
+import mongoose from 'mongoose';
 
-const importWords = async (connection: DataSource) => {
+const importWords = async (conn: mongoose.Connection) => {
     const lang: string = process.argv[4] || 'eng';
     const minLength: number = parseInt(process.argv[5]) || 5;
     const maxLength: number = parseInt(process.argv[6]) || 10;
@@ -25,10 +24,9 @@ const importWords = async (connection: DataSource) => {
             lang
         };
     });
-
     try {
         console.log('Importing...');
-        await connection.mongoManager.save(Words, filtered_json);
+        await conn.collection('words').insertMany(filtered_json);
         console.log(`${filtered_json.length} words imported!\nImporting Completed!`);
     } catch (err) {
         console.log(err);
@@ -36,32 +34,23 @@ const importWords = async (connection: DataSource) => {
     process.exit();
 };
 
-const deleteWords = async (connection: DataSource) => {
+const deleteWords = async (conn: mongoose.Connection) => {
     try {
-        await connection.mongoManager.clear(Words);
+        await conn.collection('words').deleteMany({});
         console.log('Words deleted');
     } catch (err) {
-        console.log(err.message);
+        console.log(err);
     }
     process.exit();
 };
 
-let dataSource = new DataSource({
-    type: 'mongodb',
-    host: 'localhost',
-    port: 27017,
-    database: 'wordle',
-    useUnifiedTopology: true,
-    entities: [Words]
-});
-
-dataSource
-    .initialize()
-    .then(async (connection) => {
+mongoose
+    .createConnection('mongodb://localhost:27017/wordle')
+    .asPromise()
+    .then(async (conn) => {
         console.log('Connection successful...');
-
-        if (process.argv[2] == '--import') await importWords(connection);
-        else if (process.argv[2] == '--delete') await deleteWords(connection);
+        if (process.argv[2] == '--import') await importWords(conn);
+        else if (process.argv[2] == '--delete') await deleteWords(conn);
         else {
             console.log('Missing params...exiting');
             process.exit();
@@ -69,25 +58,3 @@ dataSource
         process.exit();
     })
     .catch((err) => console.log(err));
-
-// createConnection({
-//     type: 'mongodb',
-//     host: 'localhost',
-//     port: 27017,
-//     database: 'wordle',
-//     useUnifiedTopology: true,
-//     entities: [Words]
-// })
-//     .then(async (connection) => {
-//         console.log('Connection successful...');
-
-//         if (process.argv[2] == '--import') await importWords(connection);
-//         else if (process.argv[2] == '--delete') deleteWords(connection);
-//         else {
-//             console.log('Missing params...exiting');
-//             process.exit();
-//         }
-//         process.exit();
-//     })
-//     .catch((err) => console.log(err));
-*/
