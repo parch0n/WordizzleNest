@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { CustomGameDto } from './dtos/custom-game.dto';
@@ -21,5 +21,11 @@ export class GamesController {
     @UseGuards(AuthGuard)
     createCustomGame(@Body() body: CustomGameDto) {
         return this.gamesService.createGame(body.length, body.guesses, body.lang);
+    }
+
+    @Get('/state')
+    @UseGuards(AuthGuard)
+    getState(@CurrentUser() user) {
+        return this.gamesService.getState(user);
     }
 }
