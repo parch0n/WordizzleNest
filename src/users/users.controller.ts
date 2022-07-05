@@ -1,6 +1,5 @@
 import {
     Body,
-    ClassSerializerInterceptor,
     Controller,
     Post,
     Get,
@@ -38,11 +37,6 @@ export class UsersController {
     @Post('/signout')
     signOut(@Session() session: any) {
         session.email = null;
-    }
-
-    @Get('/test')
-    async test() {
-        return await this.usersService.find('asd1@asd.com');
     }
 
     @Get('/whoami')
