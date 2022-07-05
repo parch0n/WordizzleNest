@@ -29,8 +29,8 @@ const cookieSession = require('cookie-session');
             { name: User.name, schema: UserSchema }
         ]),
         UsersModule,
-        GamesModule
-        //StatsModule
+        GamesModule,
+        StatsModule
     ],
     /* imports: [
         TypeOrmModule.forRoot({

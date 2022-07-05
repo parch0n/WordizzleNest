@@ -1,0 +1,2 @@
+### Get stats
+GET http://localhost:3000/getStats/62c4c3bfae87126563f5d31b

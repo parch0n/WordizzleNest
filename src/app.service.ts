@@ -1,6 +1,5 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { GamesService } from './games/games.service';
-import { WordsService } from './games/words.service';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {

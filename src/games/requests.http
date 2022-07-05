@@ -11,7 +11,7 @@ POST http://localhost:3000/createCustomGame
 content-type: application/json
 
 {
-    "length": 8,
+    "length": 10,
     "guesses": 10,
     "lang": "eng"
 }
