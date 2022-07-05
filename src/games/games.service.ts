@@ -98,6 +98,29 @@ export class GamesService {
         return checkGuess.result;
     }
 
+    async getState(@CurrentUser() user) {
+        const game = await this.gameModel
+            .findOne({
+                _id: process.env.game_id,
+                'users.user': user._id
+            })
+            .populate('word', '-_id -lang', this.wordModel);
+
+        if (!game) {
+            throw new NotFoundException('User not found on the current game');
+        }
+
+        const guesses = game.users.find(
+            (e) => e.user.toString() === user._id.toString()
+        ).guesses;
+        const state = new Array();
+        guesses.forEach((el) => {
+            state.push(this.wordsService.compareWords(el, game.word.word).result);
+        });
+
+        return state;
+    }
+
     async test2(@CurrentUser() user) {
         // console.log(process.env.word);
         // console.log(process.env.word_id);

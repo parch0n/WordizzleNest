@@ -25,4 +25,9 @@ export class GamesController {
     test2(@CurrentUser() user) {
         return this.gamesService.test2(user);
     }
+
+    @Get('/state')
+    getState(@CurrentUser() user) {
+        return this.gamesService.getState(user);
+    }
 }
