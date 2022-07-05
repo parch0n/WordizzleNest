@@ -1,13 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Word, WordDocument } from './word.schema';
 
 @Injectable()
 export class WordsService {
     constructor(@InjectModel(Word.name) private wordModel: Model<WordDocument>) {}
 
-    async find(length: number, lang: string): Promise<Word> {
+    findById(id: string) {
+        return this.wordModel.findById(id);
+    }
+
+    find(word: string) {
+        return this.wordModel.findOne({ word });
+    }
+
+    async generate(length: number, lang: string): Promise<Word> {
         const word = await this.wordModel.aggregate([
             {
                 $match: {

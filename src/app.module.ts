@@ -12,14 +12,21 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersService } from './users/users.service';
 import { Game, GameSchema } from './games/game.schema';
 import { Word, WordSchema } from './games/word.schema';
+import { User, UserSchema } from './users/user.schema';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 const cookieSession = require('cookie-session');
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: `.env.${process.env.NODE_ENV}`
+        }),
         MongooseModule.forRoot('mongodb://localhost:27017/wordle'),
         MongooseModule.forFeature([
             { name: Game.name, schema: GameSchema },
-            { name: Word.name, schema: WordSchema }
+            { name: Word.name, schema: WordSchema },
+            { name: User.name, schema: UserSchema }
         ]),
         UsersModule,
         GamesModule
@@ -47,17 +54,17 @@ const cookieSession = require('cookie-session');
             useValue: new ValidationPipe({
                 whitelist: true
             })
-        },
-        GamesService,
-        WordsService
+        }
     ]
 })
 export class AppModule {
+    constructor(private configService: ConfigService) {}
+
     configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(
                 cookieSession({
-                    keys: ['asfdfqwewqsda'] //encryption string
+                    keys: [this.configService.get<string>('COOKIE_KEY')] //encryption string
                 })
             )
             .forRoutes('*');

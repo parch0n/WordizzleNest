@@ -5,6 +5,20 @@ import { Word } from './word.schema';
 
 export type GameDocument = Game & Document;
 
+export class Players {
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+    user: User;
+
+    @Prop()
+    guesses: string[];
+
+    @Prop()
+    guessed: boolean;
+
+    @Prop()
+    gameOver: boolean;
+}
+
 @Schema()
 export class Game {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Word' })
@@ -19,8 +33,8 @@ export class Game {
     @Prop()
     lang: string;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-    user: User[];
+    @Prop({ type: mongoose.Schema.Types.Array })
+    users: Players[];
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);

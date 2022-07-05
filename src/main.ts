@@ -4,11 +4,6 @@ const cookieSession = require('cookie-session');
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    app.use(
-        cookieSession({
-            keys: ['asfdfqwewqsda'] //encryption string
-        })
-    );
-    await app.listen(3000);
+    await app.listen(process.env.PORT);
 }
 bootstrap();

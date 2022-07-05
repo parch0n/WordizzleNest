@@ -2,10 +2,13 @@ POST http://localhost:3000/guess
 content-type: application/json
 
 {
-    "word": "minko"
+    "word": "meeds"
 }
 
 ###
 
 GET http://localhost:3000/test
+
+###
+GET http://localhost:3000/test2
 
