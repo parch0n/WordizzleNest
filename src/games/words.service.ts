@@ -1,21 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { Word, WordDocument } from './word.schema';
 
 @Injectable()
 export class WordsService {
     constructor(@InjectModel(Word.name) private wordModel: Model<WordDocument>) {}
 
-    findById(id: string) {
-        return this.wordModel.findById(id);
-    }
-
     find(word: string) {
         return this.wordModel.findOne({ word });
     }
 
-    async generate(length: number, lang: string): Promise<Word> {
+    async getWord(length: number, lang: string): Promise<Word> {
         const word = await this.wordModel.aggregate([
             {
                 $match: {
@@ -33,6 +29,7 @@ export class WordsService {
     }
 
     compareWords(guess: string, target: string) {
+        console.log(`Comparing ${guess} to ${target}`);
         const buffer: number[] = [];
         const states: string[] = [];
         const result: { letter: string; state: string }[] = [];

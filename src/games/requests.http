@@ -1,17 +1,22 @@
-POST http://localhost:3000/guess
+### Make a guess
+POST http://localhost:3000/guess/
 content-type: application/json
 
 {
-    "word": "wouns"
+    "word": "naked"
 }
 
-###
+### Create custom game
+POST http://localhost:3000/createCustomGame
+content-type: application/json
 
-GET http://localhost:3000/test
+{
+    "length": 8,
+    "guesses": 10,
+    "lang": "eng"
+}
 
-###
-GET http://localhost:3000/test2
 
-###
+### Get state
 GET http://localhost:3000/state
 
