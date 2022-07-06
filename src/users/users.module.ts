@@ -9,8 +9,7 @@ import { User, UserSchema } from './user.schema';
 @Module({
     imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
     controllers: [UsersController],
-    providers: [UsersService, AuthService],
-    exports: [UsersService, AuthService]
+    providers: [UsersService, AuthService]
 })
 export class UsersModule {
     configure(consumer: MiddlewareConsumer) {
