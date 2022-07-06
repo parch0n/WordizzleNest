@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { ObjectIdDto } from 'src/games/dtos/objectId.dto';
 import { Game, GameDocument } from 'src/games/game.schema';
-//import { ObjectId } from 'mongoose';
 
 @Injectable()
 export class StatsService {

@@ -60,16 +60,15 @@ export class GamesService {
         );
 
         if (player_index === -1) {
-            const newGame = await this.findGame({ _id: game_id });
-            const checkGuess = this.wordsService.compareWords(word, newGame.word.word);
+            const checkGuess = this.wordsService.compareWords(word, game.word.word);
             const player = new Player();
             player.user = user._id;
             player.guesses = [];
             player.guesses.push(word);
             player.guessed = checkGuess.guessed;
             player.gameOver = checkGuess.guessed;
-            newGame.players.push(player);
-            await newGame.save();
+            game.players.push(player);
+            await game.save();
             return checkGuess.result;
         }
 
