@@ -57,7 +57,5 @@ export class StatsService {
             games_won,
             games_lost: stats.length - games_won
         };
-
-        // console.log(stats);
     }
 }

@@ -30,7 +30,7 @@ export class GamesService {
         }
 
         let game = new this.gameModel({ word, length, guesses, lang });
-        game = await game.populate('word');
+        game = await game.populate('word', '-_id');
         return game.save();
     }
 
@@ -40,23 +40,10 @@ export class GamesService {
             throw new NotFoundException('Word not found in the dictionary');
         }
 
-        const game = await this.findGame({
-            _id: game_id,
-            'players.user': user._id
-        });
+        const game = await this.findGame({ _id: game_id });
 
         if (!game) {
-            const newGame = await this.findGame({ _id: game_id });
-            const checkGuess = this.wordsService.compareWords(word, newGame.word.word);
-            const player = new Player();
-            player.user = user._id;
-            player.guesses = [];
-            player.guesses.push(word);
-            player.guessed = checkGuess.guessed;
-            player.gameOver = checkGuess.guessed;
-            newGame.players.push(player);
-            await newGame.save();
-            return checkGuess.result;
+            throw new NotFoundException('No game was found with the specified ID');
         }
 
         const word_length = game.length;
@@ -71,6 +58,20 @@ export class GamesService {
         const player_index = game.players.findIndex(
             (e) => e.user.toString() === user._id.toString()
         );
+
+        if (player_index === -1) {
+            const newGame = await this.findGame({ _id: game_id });
+            const checkGuess = this.wordsService.compareWords(word, newGame.word.word);
+            const player = new Player();
+            player.user = user._id;
+            player.guesses = [];
+            player.guesses.push(word);
+            player.guessed = checkGuess.guessed;
+            player.gameOver = checkGuess.guessed;
+            newGame.players.push(player);
+            await newGame.save();
+            return checkGuess.result;
+        }
 
         if (game.players[player_index].guesses.length >= guesses_limit) {
             throw new BadRequestException(`Game Over! No more tries left!`);
