@@ -5,7 +5,7 @@ import { Word } from './word.schema';
 
 export type GameDocument = Game & Document;
 
-export class Players {
+export class Player {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: User;
 
@@ -34,7 +34,7 @@ export class Game {
     lang: string;
 
     @Prop({ type: mongoose.Schema.Types.Array })
-    users: Players[];
+    players: Player[];
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);

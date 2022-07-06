@@ -3,7 +3,7 @@ POST http://localhost:3000/guess/
 content-type: application/json
 
 {
-    "word": "naked"
+    "word": "stare"
 }
 
 ### Create custom game

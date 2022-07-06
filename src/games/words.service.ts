@@ -29,7 +29,7 @@ export class WordsService {
     }
 
     compareWords(guess: string, target: string) {
-        console.log(`Comparing ${guess} to ${target}`);
+        // console.log(`Comparing ${guess} to ${target}`);
         const buffer: number[] = [];
         const states: string[] = [];
         const result: { letter: string; state: string }[] = [];
@@ -47,7 +47,6 @@ export class WordsService {
                 let found = false;
                 [...target].some((valueW, indexW) => {
                     if (valueG === valueW && !buffer[indexW]) {
-                        //state = 'yellow';
                         buffer[indexW] = 1;
                         states[indexG] = 'yellow';
                         found = true;

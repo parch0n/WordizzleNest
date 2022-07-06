@@ -21,7 +21,7 @@ export class StatsService {
                 }
             },
             {
-                $unwind: '$users'
+                $unwind: '$players'
             },
             {
                 $unwind: '$populated'
@@ -29,14 +29,14 @@ export class StatsService {
             {
                 $match: {
                     _id: new mongoose.Types.ObjectId(game_id),
-                    'users.gameOver': true
+                    'players.gameOver': true
                 }
             },
             {
                 $project: {
                     _id: 1,
                     populated: 1,
-                    'users.guessed': 1
+                    'players.guessed': 1
                 }
             }
         ]);
@@ -47,7 +47,7 @@ export class StatsService {
 
         let games_won = 0;
         stats.forEach((el) => {
-            if (el.users.guessed) games_won++;
+            if (el.players.guessed) games_won++;
         });
 
         return {
