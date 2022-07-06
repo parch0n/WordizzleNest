@@ -38,32 +38,32 @@ describe('AuthService', () => {
         expect(service).toBeDefined();
     });
 
-    it('creates a new user', async () => {
+    it('should create a new user and returns it', async () => {
         fakeUsersService.find = () => Promise.resolve(null);
         const user = await service.signup('test@test.com', 'asdfgh');
         expect(user).toBeDefined();
     });
 
-    it('throws an error if email is already in use', async () => {
+    it('should throw an error if email is already in use', async () => {
         await expect(service.signup('asd@asd.com', 'asdf')).rejects.toThrow(
             BadRequestException
         );
     });
 
-    it('throws an error if email is wrong', async () => {
+    it('should throw an error if email is wrong', async () => {
         fakeUsersService.find = () => Promise.resolve(null);
         await expect(service.signin('asd@asd.com', 'asdf')).rejects.toThrow(
             BadRequestException
         );
     });
 
-    it('throws an error if password is wrong', async () => {
+    it('should throw an error if password is wrong', async () => {
         await expect(service.signin('asd@asd.com', 'asdf')).rejects.toThrow(
             BadRequestException
         );
     });
 
-    it('signs-in a user if email and password are correct', async () => {
+    it('should return a user if email and password are correct', async () => {
         const user = await service.signin('test@test.com', 'asd');
         expect(user).toBeDefined();
     });
