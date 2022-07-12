@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { ObjectIdDto } from 'src/games/dtos/objectId.dto';
+import { ObjectIdDto } from '../games/dtos/objectId.dto';
 import { StatsService } from './stats.service';
 
 @Controller('')

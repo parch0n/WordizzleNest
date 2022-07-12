@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { ObjectIdDto } from 'src/games/dtos/objectId.dto';
-import { Game, GameDocument } from 'src/games/game.schema';
+import { ObjectIdDto } from '../games/dtos/objectId.dto';
+import { Game, GameDocument } from '../games/game.schema';
 
 @Injectable()
 export class StatsService {

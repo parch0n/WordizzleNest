@@ -1,15 +1,14 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { AuthGuard } from '../guards/auth.guard';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
 import { CustomGameDto } from './dtos/custom-game.dto';
 import { ObjectIdDto } from './dtos/objectId.dto';
 import { WordDto } from './dtos/word.dto';
 import { GamesService } from './games.service';
-import { WordsService } from './words.service';
 
 @Controller('')
 export class GamesController {
-    constructor(private wordsService: WordsService, private gamesService: GamesService) {}
+    constructor(private gamesService: GamesService) {}
 
     @Post('/guess/:id?')
     @UseGuards(AuthGuard)

@@ -3,21 +3,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Game, GameDocument, Player } from './game.schema';
 import { WordsService } from './words.service';
 import { FilterQuery, Model } from 'mongoose';
-import { Word, WordDocument } from './word.schema';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
-import { User, UserDocument } from '../users/user.schema';
 import { ObjectIdDto } from './dtos/objectId.dto';
 
 @Injectable()
 export class GamesService {
     constructor(
         private wordsService: WordsService,
-        @InjectModel(Game.name) private gameModel: Model<GameDocument>,
-        @InjectModel(Word.name) private wordModel: Model<WordDocument>,
-        @InjectModel(User.name) private userModel: Model<UserDocument>
+        @InjectModel(Game.name) private gameModel: Model<GameDocument>
     ) {}
 
-    private async findGame(filter: FilterQuery<GameDocument>): Promise<GameDocument> {
+    async findGame(filter: FilterQuery<GameDocument>): Promise<GameDocument> {
         return this.gameModel.findOne(filter).populate('word');
     }
 

@@ -4,7 +4,7 @@ import { WordsService } from './words.service';
 import { GamesService } from './games.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Game, GameSchema } from './game.schema';
-import { User, UserSchema } from 'src/users/user.schema';
+import { User, UserSchema } from '../users/user.schema';
 import { Word, WordSchema } from './word.schema';
 
 @Module({
