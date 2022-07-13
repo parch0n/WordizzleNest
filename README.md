@@ -26,37 +26,43 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
-
-```bash
-$ npm install
-```
-
 ## Running the app
 
-```bash
-# development
-$ npm run start
-
-# watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
 
 ## Test
 
-```bash
-# unit tests
-$ npm run test
+$ npm run test:watch
 
-# e2e tests
-$ npm run test:e2e
+Може да ги филтрирате от менюто с w -> p-> и примерно auth.service, за да пуснете само тестовете на този service, а не всичките тестове наведнъж
 
-# test coverage
-$ npm run test:cov
-```
+## Notes
+
+В папките games, stats и users има requests.http файл, откъдето тествам route-овете, заедно с Rest Client extension-а за VS Code
+
+Config file-а е с име .env.development и моят изглежда така...
+
+PORT=3000
+DATABASE=mongodb://localhost:27017/wordle
+COOKIE_KEY=sadaklwqeqn
+GAME_GUESSES_LIMIT=6
+GAME_WORD_LENGTH=5
+GAME_LANG=eng
+
+/getStats може да работи с ID, за да вземе статистики за конкретна игра или без ID, да вземе статистиките на основната игра
+GET http://localhost:3000/getStats/62cd4a422eba27f2b703564f
+GET http://localhost:3000/getStats/
+
+/guess е по същия начин
+POST http://localhost:3000/guess/
+POST http://localhost:3000/guess/62cd4a422eba27f2b703564f
+
+За да играеш, вече е необходимо да си логнат
+
+import скрипта работи по същия начин, с разликата, че е на TypeScript и го пускаме с ts-node. Желателно е първоначално да импортнете думите:
+ts-node import-words.ts --import eng.txt eng 5 10
+ts-node import-words.ts --import bg.txt bg 5 10
+ts-node import-words.ts --delete - трие всички думи
 
 ## Support
 
@@ -64,9 +70,9 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+-   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+-   Website - [https://nestjs.com](https://nestjs.com/)
+-   Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
