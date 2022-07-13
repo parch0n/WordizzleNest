@@ -12,7 +12,7 @@ export class AppService implements OnApplicationBootstrap {
             process.env.GAME_LANG
         );
         process.env.game_id = game._id.toString();
-        // console.log(process.env.game_id);
+        console.log(process.env.game_id);
         console.log(game.word.word);
     }
 }
