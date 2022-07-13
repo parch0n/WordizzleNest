@@ -19,7 +19,7 @@ const cookieSession = require('cookie-session');
             isGlobal: true,
             envFilePath: `.env.${process.env.NODE_ENV}`
         }),
-        MongooseModule.forRoot('mongodb://localhost:27017/wordle'),
+        MongooseModule.forRoot(process.env.DATABASE),
         MongooseModule.forFeature([
             { name: Game.name, schema: GameSchema },
             { name: Word.name, schema: WordSchema },
