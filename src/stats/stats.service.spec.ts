@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { GamesService } from '../games/games.service';
 import { StatsService } from './stats.service';
 
 describe('StatsService', () => {
@@ -27,6 +28,10 @@ describe('StatsService', () => {
                 {
                     provide: getModelToken('Game'),
                     useValue: mockGameModel
+                },
+                {
+                    provide: GamesService,
+                    useValue: {}
                 }
             ]
         }).compile();

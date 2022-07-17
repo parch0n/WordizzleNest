@@ -19,7 +19,7 @@ export class GamesController {
     @Post('/createCustomGame')
     @UseGuards(AuthGuard)
     createCustomGame(@Body() body: CustomGameDto) {
-        return this.gamesService.createGame(body.length, body.guesses, body.lang);
+        return this.gamesService.createGame(body.length, body.guesses, body.lang, false);
     }
 
     @Get('/state')

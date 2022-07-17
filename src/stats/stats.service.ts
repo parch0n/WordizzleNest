@@ -1,15 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
+import { GamesService } from '../games/games.service';
 import { ObjectIdDto } from '../games/dtos/objectId.dto';
 import { Game, GameDocument } from '../games/game.schema';
 
 @Injectable()
 export class StatsService {
-    constructor(@InjectModel(Game.name) private gameModel: Model<GameDocument>) {}
+    constructor(
+        @InjectModel(Game.name) private gameModel: Model<GameDocument>,
+        private gameService: GamesService
+    ) {}
 
     async getStats(ObjId?: ObjectIdDto) {
-        const game_id = ObjId.id || process.env.game_id;
+        const game_id = ObjId.id || this.gameService.game_id;
         const stats = await this.gameModel.aggregate([
             {
                 $lookup: {

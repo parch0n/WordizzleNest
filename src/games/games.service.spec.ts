@@ -1,8 +1,7 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import exp from 'constants';
-import { Game, GameDocument } from './game.schema';
+import { GameDocument } from './game.schema';
 import { GamesService } from './games.service';
 import { WordsService } from './words.service';
 
@@ -52,8 +51,6 @@ describe('GamesService', () => {
         };
     }
 
-    const mockWordModel = {};
-
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
@@ -94,7 +91,7 @@ describe('GamesService', () => {
     });
 
     it('should return a game object when creating a game', async () => {
-        const res = await service.createGame(1, 1, 'eng');
+        const res = await service.createGame(1, 1, 'eng', false);
         expect(res).toBeDefined();
     });
 
@@ -102,7 +99,9 @@ describe('GamesService', () => {
         fakeWordsService.getWord = jest
             .fn()
             .mockImplementation(() => Promise.resolve(null));
-        await expect(service.createGame(1, 1, 'eng')).rejects.toThrow(NotFoundException);
+        await expect(service.createGame(1, 1, 'eng', true)).rejects.toThrow(
+            NotFoundException
+        );
     });
 
     it('should throw an error if word is not found in dictionary when guessing', async () => {
