@@ -30,9 +30,6 @@ export class Game {
     @Prop()
     guesses: number;
 
-    @Prop()
-    lang: string;
-
     @Prop({ type: mongoose.Schema.Types.Array })
     players: Player[];
 }

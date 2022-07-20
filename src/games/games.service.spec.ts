@@ -32,7 +32,6 @@ describe('GamesService', () => {
             word: 1,
             length: 5,
             guesses: 6,
-            lang: 'eng',
             players: [{ user: 1, guesses: [], guessed: true, gameOver: true }]
         });
         static findOne = jest.fn().mockImplementation(() =>
@@ -41,7 +40,6 @@ describe('GamesService', () => {
                 word: 1,
                 length: 5,
                 guesses: 6,
-                lang: 'eng',
                 players: [{ user: 1, guesses: [], guessed: true, gameOver: true }]
             })
         );
@@ -81,7 +79,6 @@ describe('GamesService', () => {
             word: { word: 'test', lang: 'eng' },
             length: 5,
             guesses: 6,
-            lang: 'eng',
             players: []
         } as GameDocument);
     });

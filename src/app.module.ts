@@ -20,11 +20,11 @@ const cookieSession = require('cookie-session');
             envFilePath: `.env.${process.env.NODE_ENV}`
         }),
         MongooseModule.forRoot(process.env.DATABASE),
-        MongooseModule.forFeature([
+        /*  MongooseModule.forFeature([
             { name: Game.name, schema: GameSchema },
             { name: Word.name, schema: WordSchema },
             { name: User.name, schema: UserSchema }
-        ]),
+        ]),*/
         UsersModule,
         GamesModule,
         StatsModule

@@ -27,7 +27,7 @@ export class GamesService {
             );
         }
 
-        let game = new this.gameModel({ word, length, guesses, lang });
+        let game = new this.gameModel({ word, length, guesses });
         game = await game.populate('word', '-_id');
         if (is_global) this.game_id = game._id.toString();
         return game.save();
